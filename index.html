@@ -1171,10 +1171,21 @@
       loadCandidates();
       syncAdminGate();
 
+      const DEFAULT_FB_CONFIG = {
+        apiKey: "AIzaSyBhN7knjd06fyvEkgRvayWl1WtxXYxy2X4",
+        authDomain: "alarabi2026-69c6a.firebaseapp.com",
+        projectId: "alarabi2026-69c6a",
+        storageBucket: "alarabi2026-69c6a.firebasestorage.app",
+        messagingSenderId: "139904715383",
+        appId: "1:139904715383:web:59fbf3f0a6a99d1d719472",
+        measurementId: "G-J0L1HRGKVR"
+      };
       try {
         const savedFb = localStorage.getItem(FB_CONFIG_KEY);
-        if (savedFb) initFirebaseLive(JSON.parse(savedFb));
-      } catch (e) {}
+        initFirebaseLive(savedFb ? JSON.parse(savedFb) : DEFAULT_FB_CONFIG);
+      } catch (e) {
+        initFirebaseLive(DEFAULT_FB_CONFIG);
+      }
     });
   </script>
 </body>
