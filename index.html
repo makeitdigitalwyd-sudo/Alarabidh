@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>العربي | Al-Arabi 3D Heritage Championship — Darul Huda Islamic University</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-deep: #120703;
+      --bg-card: #1E0C05;
+      --bg-elevated: #2B1208;
+      --gold-light: #FCE7CC;
+      --gold-main: #DFA76E;
+      --gold-dim: #9F6B3E;
+      --border-gold: rgba(223, 167, 110, 0.28);
+    }
+
+    body {
+      background-color: var(--bg-deep);
+      color: #F8EFE6;
+      font-family: 'Tajawal', 'Inter', sans-serif;
+      background-image:
+        radial-gradient(ellipse 85% 50% at 50% -10%, rgba(200, 138, 85, 0.2), transparent 70%),
+        radial-gradient(ellipse 60% 45% at 90% 100%, rgba(159, 107, 62, 0.14), transparent 60%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .font-display { font-family: 'Amiri', serif; }
+    .font-latin { font-family: 'Inter', sans-serif; }
+
+    .islamic-lattice {
+      background-image: url("data:image/svg+xml,%3Csvg width='72' height='72' viewBox='0 0 72 72' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23DFA76E' stroke-width='0.6' stroke-opacity='0.08'%3E%3Cpath d='M36 0L45 27L72 36L45 45L36 72L27 45L0 36L27 27Z'/%3E%3Ccircle cx='36' cy='36' r='12'/%3E%3Crect x='18' y='18' width='36' height='36' transform='rotate(45 36 36)'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #FFF0D9 0%, #E7B67E 48%, #B6763C 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .gold-border-card {
+      background: linear-gradient(180deg, rgba(43, 18, 8, 0.9) 0%, rgba(22, 9, 4, 0.96) 100%);
+      border: 1px solid var(--border-gold);
+      box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.72), inset 0 1px 0 rgba(252, 231, 204, 0.12);
+    }
+
+    /* 3D Perspective Tilt Cards */
+    .tilt-stage { perspective: 1000px; }
+    .tilt-card {
+      transform-style: preserve-3d;
+      transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease;
+    }
+    .tilt-card:hover {
+      box-shadow: 0 24px 48px -12px rgba(223, 167, 110, 0.22);
+    }
+    .tilt-depth { transform: translateZ(24px); }
+
+    .medallion {
+      background: radial-gradient(circle at 30% 25%, rgba(252, 231, 204, 0.18) 0%, rgba(30, 12, 5, 0.94) 72%);
+      border: 1.5px solid rgba(223, 167, 110, 0.5);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), inset 0 0 24px rgba(223, 167, 110, 0.1);
+    }
+
+    .input-royal {
+      background: rgba(14, 5, 2, 0.78);
+      border: 1px solid rgba(223, 167, 110, 0.28);
+      color: #F8EFE6;
+      transition: all 0.2s ease;
+    }
+    .input-royal:focus {
+      outline: none;
+      border-color: #DFA76E;
+      box-shadow: 0 0 0 3px rgba(223, 167, 110, 0.18);
+      background: rgba(20, 8, 4, 0.95);
+    }
+    .input-royal::placeholder { color: rgba(248, 239, 230, 0.36); }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #F0C48E 0%, #C88649 100%);
+      color: #160904;
+      font-weight: 700;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+    .btn-gold:hover {
+      filter: brightness(1.07);
+      box-shadow: 0 10px 28px rgba(223, 167, 110, 0.34);
+    }
+    .btn-gold:active { transform: scale(0.985); }
+
+    .qr-box canvas, .qr-box img {
+      margin: 0 auto;
+      border-radius: 10px;
+      display: block;
+    }
+
+    /* 3D Holographic Pass Shimmer */
+    .pass-holo {
+      background: linear-gradient(135deg, #2A1309 0%, #160904 45%, #34180B 100%);
+      border: 1.5px solid rgba(240, 196, 142, 0.65);
+      position: relative;
+      overflow: hidden;
+    }
+    .pass-holo::after {
+      content: "";
+      position: absolute;
+      inset: -50%;
+      background: linear-gradient(115deg, transparent 40%, rgba(252, 231, 204, 0.14) 50%, transparent 60%);
+      transform: translateX(-100%);
+      animation: shimmerPass 4.5s infinite ease-in-out;
+      pointer-events: none;
+    }
+    @keyframes shimmerPass {
+      0%, 20% { transform: translateX(-100%); }
+      55%, 100% { transform: translateX(100%); }
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.85); }
+    }
+    .live-dot { animation: pulseDot 1.6s infinite ease-in-out; }
+
+    /* Stepper connector */
+    .step-badge-active {
+      background: linear-gradient(135deg, #F0C48E, #C88649);
+      color: #160904;
+      box-shadow: 0 0 18px rgba(223, 167, 110, 0.45);
+    }
+    .step-badge-idle {
+      background: rgba(223, 167, 110, 0.1);
+      color: #DFA76E;
+      border: 1px solid rgba(223, 167, 110, 0.3);
+    }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #120703; }
+    ::-webkit-scrollbar-thumb { background: #5A351D; border-radius: 3px; }
+  </style>
+</head>
+<body class="islamic-lattice antialiased selection:bg-[#DFA76E]/30 selection:text-[#FCE7CC]">
+
+  <!-- Top Navigation Bar -->
+  <header class="sticky top-0 z-40 border-b border-[#DFA76E]/20 bg-[#120703]/92 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#F0C48E] to-[#9F6B3E] flex items-center justify-center text-[#120703] font-display font-bold text-2xl shadow-lg">
+          ع
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-display text-xl font-bold gold-gradient-text leading-none">العربي — Al-Arabi</h1>
+            <span id="syncBadge" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-latin font-medium bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 live-dot"></span>
+              <span id="syncLabel">Live Auto-Sync</span>
+            </span>
+          </div>
+          <p class="text-[11px] text-[#DFA76E]/80 mt-0.5">جامعة دار الهدى الإسلامية • قسم اللغة العربية وآدابها</p>
+        </div>
+      </div>
+
+      <nav class="flex items-center gap-1.5 bg-[#1E0C05] p-1 rounded-xl border border-[#DFA76E]/25">
+        <button id="navRegister" onclick="switchView('register')" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all bg-[#DFA76E] text-[#120703]">
+          التسجيل / Register
+        </button>
+        <button id="navAdmin" onclick="switchView('admin')" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all text-[#FCE7CC]/80 hover:text-white flex items-center gap-1.5">
+          <span>الإدارة / Admin</span>
+          <span id="navAdminCount" class="px-1.5 py-0.2 rounded-full bg-[#DFA76E]/20 text-[#FCE7CC] text-[10px] font-latin">0</span>
+        </button>
+        <button id="navQr" onclick="switchView('qr')" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all text-[#FCE7CC]/80 hover:text-white">
+          QR Studio
+        </button>
+        <button onclick="openFirebaseModal()" title="Firebase Cloud Sync" class="px-2.5 py-1.5 rounded-lg text-xs text-[#DFA76E] hover:bg-[#DFA76E]/10 transition-all font-latin flex items-center gap-1">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+          <span class="hidden sm:inline">Firebase</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Real-Time Live Ticker -->
+    <div class="border-t border-[#DFA76E]/15 bg-[#180A04]/90 px-4 py-1.5">
+      <div class="max-w-6xl mx-auto flex items-center justify-between text-[11px] text-[#DFA76E]/85 gap-3">
+        <div class="flex items-center gap-2 truncate">
+          <span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-latin text-[10px] font-semibold">LIVE</span>
+          <span id="liveTickerText" class="truncate">جاهز لاستقبال التسجيلات الجديدة فورياً بدون تحديث الصفحة...</span>
+        </div>
+        <span class="font-latin text-[#FCE7CC]/70 shrink-0" dir="ltr">19 Dec 2026</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Toast Container -->
+  <div id="toastBox" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 pointer-events-none w-[92%] max-w-md"></div>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-5xl mx-auto px-4 py-6 sm:py-10">
+
+    <!-- ==================== VIEW 1: REGISTRATION ==================== -->
+    <section id="viewRegister" class="space-y-8">
+
+      <!-- 3D Heritage Hero Banner -->
+      <div class="gold-border-card rounded-3xl p-6 sm:p-10 relative overflow-hidden text-center min-h-[340px] flex flex-col justify-center">
+        <!-- Three.js 3D Heritage Star Canvas -->
+        <canvas id="hero3dCanvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-65"></canvas>
+        <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-[#DFA76E] to-transparent opacity-70"></div>
+
+        <div class="relative z-10 space-y-4">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#120703]/75 border border-[#DFA76E]/35 text-[#FCE7CC] text-xs backdrop-blur-sm">
+            <span>إرث الضاد • مسابقة لاكتشاف البطل في اللغة العربية</span>
+            <span class="text-[#DFA76E]">•</span>
+            <span class="font-latin">19 Dec 2026</span>
+          </div>
+
+          <h2 class="font-display text-6xl sm:text-8xl font-bold gold-gradient-text tracking-wide drop-shadow-2xl">العربي</h2>
+          <p class="text-sm sm:text-base text-[#F8EFE6]/85 max-w-xl mx-auto leading-relaxed">
+            من أمجاد البيان العربي إلى رحاب <strong class="text-[#FCE7CC]">جامعة دار الهدى الإسلامية</strong> — ينظمها قسم اللغة العربية وآدابها بكلية اللغات والآداب لاختيار فارس اللغة العربية.
+          </p>
+
+          <!-- 3D Tilt Prize Medallions -->
+          <div class="tilt-stage grid grid-cols-3 gap-3 sm:gap-6 max-w-xl mx-auto pt-4">
+            <div class="tilt-card medallion rounded-2xl p-3 sm:p-4" onmousemove="tiltEl(event, this)" onmouseleave="resetTilt(this)">
+              <div class="tilt-depth">
+                <div class="text-[11px] text-[#DFA76E] font-medium">المركز الثاني</div>
+                <div class="font-latin text-xl sm:text-2xl font-bold text-[#FCE7CC] mt-0.5">₹3,333</div>
+              </div>
+            </div>
+            <div class="tilt-card medallion rounded-2xl p-3.5 sm:p-5 -mt-2 border-[#FCE7CC]/75" onmousemove="tiltEl(event, this)" onmouseleave="resetTilt(this)">
+              <div class="tilt-depth">
+                <div class="text-xs text-[#FCE7CC] font-bold">المركز الأول</div>
+                <div class="font-latin text-2xl sm:text-3xl font-extrabold gold-gradient-text mt-0.5">₹4,444</div>
+              </div>
+            </div>
+            <div class="tilt-card medallion rounded-2xl p-3 sm:p-4" onmousemove="tiltEl(event, this)" onmouseleave="resetTilt(this)">
+              <div class="tilt-depth">
+                <div class="text-[11px] text-[#DFA76E] font-medium">المركز الثالث</div>
+                <div class="font-latin text-xl sm:text-2xl font-bold text-[#FCE7CC] mt-0.5">₹2,222</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ordered 4-Step Progress Bar -->
+      <div class="gold-border-card rounded-2xl p-4 sm:p-5">
+        <div class="grid grid-cols-4 gap-2 text-center">
+          <div class="flex flex-col items-center gap-1.5">
+            <span id="stepBadge1" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-latin font-bold step-badge-active transition-all">01</span>
+            <span class="text-[11px] sm:text-xs font-medium text-[#FCE7CC]">بيانات المشارك</span>
+          </div>
+          <div class="flex flex-col items-center gap-1.5">
+            <span id="stepBadge2" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-latin font-bold step-badge-idle transition-all">02</span>
+            <span class="text-[11px] sm:text-xs font-medium text-[#DFA76E]/85">دفع ₹50</span>
+          </div>
+          <div class="flex flex-col items-center gap-1.5">
+            <span id="stepBadge3" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-latin font-bold step-badge-idle transition-all">03</span>
+            <span class="text-[11px] sm:text-xs font-medium text-[#DFA76E]/85">إرفاق الإيصال</span>
+          </div>
+          <div class="flex flex-col items-center gap-1.5">
+            <span id="stepBadge4" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-latin font-bold step-badge-idle transition-all">04</span>
+            <span class="text-[11px] sm:text-xs font-medium text-[#DFA76E]/85">البطاقة الذهبية</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Strictly Ordered Registration Flow -->
+      <form id="regForm" class="space-y-6">
+
+        <!-- STEP 01: Candidate Details -->
+        <div class="gold-border-card rounded-3xl p-6 sm:p-8 space-y-5">
+          <div class="flex items-center justify-between border-b border-[#DFA76E]/15 pb-4">
+            <div class="flex items-center gap-3">
+              <span class="w-9 h-9 rounded-xl bg-[#DFA76E]/20 border border-[#DFA76E]/40 text-[#FCE7CC] font-latin font-bold flex items-center justify-center">01</span>
+              <div>
+                <h3 class="text-lg sm:text-xl font-bold text-[#FCE7CC]">بيانات المشارك</h3>
+                <p class="text-xs text-[#DFA76E]/75 font-latin">Step 1 • Candidate Information</p>
+              </div>
+            </div>
+            <span class="text-xs text-[#DFA76E]/80 font-latin">Required *</span>
+          </div>
+
+          <!-- اسم المشارك -->
+          <div>
+            <label class="block text-sm font-medium text-[#FCE7CC] mb-1.5">
+              اسم المشارك <span class="text-xs text-[#DFA76E]/75 font-latin">(Participant Name) *</span>
+            </label>
+            <input id="fName" type="text" required oninput="updateStepper()" placeholder="أدخل الاسم الكامل للمشارك..."
+              class="input-royal w-full rounded-xl px-4 py-3 text-sm sm:text-base" />
+          </div>
+
+          <!-- عمر المشارك & رقم الواتساب -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-[#FCE7CC] mb-1.5">
+                عمر المشارك <span class="text-xs text-[#DFA76E]/75 font-latin">(Age) *</span>
+              </label>
+              <input id="fAge" type="number" min="12" max="45" required oninput="updateStepper()" placeholder="مثال: 20"
+                class="input-royal w-full rounded-xl px-4 py-3 text-sm sm:text-base font-latin" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-[#FCE7CC] mb-1.5">
+                رقم الواتساب <span class="text-xs text-[#DFA76E]/75 font-latin">(WhatsApp Optional)</span>
+              </label>
+              <input id="fPhone" type="tel" placeholder="+91 98765 43210" dir="ltr"
+                class="input-royal w-full rounded-xl px-4 py-3 text-sm sm:text-base font-latin text-left" />
+            </div>
+          </div>
+
+          <!-- كلية -->
+          <div>
+            <label class="block text-sm font-medium text-[#FCE7CC] mb-1.5">
+              كلية <span class="text-xs text-[#DFA76E]/75 font-latin">(College / Faculty) *</span>
+            </label>
+            <input id="fCollege" type="text" required oninput="updateStepper()" placeholder="اكتب اسم الكلية أو اختر من القائمة..."
+              class="input-royal w-full rounded-xl px-4 py-3 text-sm sm:text-base" />
+            <div class="flex flex-wrap gap-1.5 mt-2.5">
+              <button type="button" onclick="setCollege('كلية اللغات والآداب')" class="px-3 py-1 rounded-lg text-xs bg-[#DFA76E]/10 hover:bg-[#DFA76E]/25 border border-[#DFA76E]/25 text-[#FCE7CC] transition">كلية اللغات والآداب</button>
+              <button type="button" onclick="setCollege('كلية الشريعة وأصول الدين')" class="px-3 py-1 rounded-lg text-xs bg-[#DFA76E]/10 hover:bg-[#DFA76E]/25 border border-[#DFA76E]/25 text-[#FCE7CC] transition">كلية الشريعة وأصول الدين</button>
+              <button type="button" onclick="setCollege('كلية الدعوة والحضارة')" class="px-3 py-1 rounded-lg text-xs bg-[#DFA76E]/10 hover:bg-[#DFA76E]/25 border border-[#DFA76E]/25 text-[#FCE7CC] transition">كلية الدعوة والحضارة</button>
+              <button type="button" onclick="setCollege('الكلية الثانوية / Senior Secondary')" class="px-3 py-1 rounded-lg text-xs bg-[#DFA76E]/10 hover:bg-[#DFA76E]/25 border border-[#DFA76E]/25 text-[#FCE7CC] transition">الكلية الثانوية</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 02: Payment QR & UPI -->
+        <div class="gold-border-card rounded-3xl p-6 sm:p-8">
+          <div class="flex items-center justify-between border-b border-[#DFA76E]/15 pb-4 mb-6">
+            <div class="flex items-center gap-3">
+              <span class="w-9 h-9 rounded-xl bg-[#DFA76E]/20 border border-[#DFA76E]/40 text-[#FCE7CC] font-latin font-bold flex items-center justify-center">02</span>
+              <div>
+                <h3 class="text-lg sm:text-xl font-bold text-[#FCE7CC]">دفع رسوم الاشتراك (₹50)</h3>
+                <p class="text-xs text-[#DFA76E]/75 font-latin">Step 2 • Scan QR or Pay via UPI</p>
+              </div>
+            </div>
+            <span class="px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/35 text-emerald-300 text-xs font-latin font-bold">₹50 INR</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+            <div class="text-center">
+              <div class="bg-white p-4 rounded-2xl inline-block shadow-2xl">
+                <div id="upiQrBox" class="qr-box"></div>
+              </div>
+              <p class="text-[11px] text-[#DFA76E]/80 mt-2.5 font-latin">GPay • PhonePe • Paytm • BHIM</p>
+            </div>
+
+            <div class="bg-[#120703]/80 border border-[#DFA76E]/25 rounded-2xl p-5 space-y-4 text-center md:text-right">
+              <div>
+                <div class="text-xs text-[#DFA76E]/80">رقم الدفع الرسمي / Official Payment Number</div>
+                <div class="flex items-center justify-center md:justify-start gap-2.5 mt-1.5" dir="ltr">
+                  <span class="font-latin text-xl font-bold text-[#FCE7CC] tracking-wide">+91 90725 84470</span>
+                  <button type="button" onclick="copyText('+91 90725 84470', 'تم نسخ الرقم +91 90725 84470')"
+                    class="px-3 py-1 rounded-lg bg-[#DFA76E]/15 hover:bg-[#DFA76E]/30 text-[#FCE7CC] text-xs font-latin transition">
+                    Copy
+                  </button>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap justify-center md:justify-start gap-2.5">
+                <a id="upiDeepLink" href="#" class="px-4 py-2.5 rounded-xl bg-emerald-600/25 hover:bg-emerald-600/40 border border-emerald-500/45 text-emerald-200 text-xs font-latin font-semibold transition">
+                  Open UPI App (₹50)
+                </a>
+                <button type="button" onclick="downloadQr('upiQrBox', 'al-arabi-upi-50-qr.png')"
+                  class="px-4 py-2.5 rounded-xl bg-[#DFA76E]/15 hover:bg-[#DFA76E]/25 border border-[#DFA76E]/30 text-[#FCE7CC] text-xs font-latin transition">
+                  Download QR
+                </button>
+              </div>
+
+              <div class="pt-3 border-t border-[#DFA76E]/15 flex items-center justify-between text-xs text-[#DFA76E]/80">
+                <span>للاستفسار (Inquiries):</span>
+                <span class="font-latin font-semibold text-[#FCE7CC]" dir="ltr">8590409367</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 03: Screenshot Upload -->
+        <div class="gold-border-card rounded-3xl p-6 sm:p-8 space-y-4">
+          <div class="flex items-center justify-between border-b border-[#DFA76E]/15 pb-4">
+            <div class="flex items-center gap-3">
+              <span class="w-9 h-9 rounded-xl bg-[#DFA76E]/20 border border-[#DFA76E]/40 text-[#FCE7CC] font-latin font-bold flex items-center justify-center">03</span>
+              <div>
+                <h3 class="text-lg sm:text-xl font-bold text-[#FCE7CC]">إرفاق لقطة شاشة الدفع</h3>
+                <p class="text-xs text-[#DFA76E]/75 font-latin">Step 3 • Attach ₹50 Payment Screenshot *</p>
+              </div>
+            </div>
+          </div>
+
+          <label id="dropZone" for="fScreenshot"
+            class="flex flex-col items-center justify-center w-full min-h-[160px] rounded-2xl border-2 border-dashed border-[#DFA76E]/40 bg-[#120703]/65 hover:border-[#DFA76E] hover:bg-[#1E0C05]/85 cursor-pointer transition p-5 text-center">
+            <div id="uploadPlaceholder" class="space-y-2">
+              <div class="w-12 h-12 rounded-full bg-[#DFA76E]/15 text-[#DFA76E] flex items-center justify-center mx-auto">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              </div>
+              <p class="text-sm font-medium text-[#FCE7CC]">اضغط هنا لرفع صورة إيصال الدفع (₹50)</p>
+              <p class="text-xs text-[#DFA76E]/75 font-latin">Click or drag & drop PNG / JPG screenshot</p>
+            </div>
+            <div id="uploadPreviewWrap" class="hidden w-full flex flex-col items-center gap-2">
+              <img id="uploadPreviewImg" src="" alt="Payment Screenshot Preview" class="max-h-52 rounded-xl border border-[#DFA76E]/50 object-contain shadow-xl" />
+              <span id="uploadFileName" class="text-xs text-emerald-300 font-latin"></span>
+            </div>
+            <input id="fScreenshot" type="file" accept="image/*" class="hidden" />
+          </label>
+        </div>
+
+        <!-- STEP 04: Submit & Reveal 3D Pass -->
+        <button type="submit" id="submitBtn" class="btn-gold w-full py-4 rounded-2xl text-base sm:text-lg flex items-center justify-center gap-2.5 shadow-2xl">
+          <span>04 • تأكيد التسجيل وإصدار البطاقة الذهبية</span>
+          <span class="font-latin text-xs opacity-80">(Submit & Get Pass)</span>
+        </button>
+      </form>
+
+      <!-- 3D Holographic Digital Pass (Revealed on Submit) -->
+      <div id="successPassCard" class="hidden tilt-stage">
+        <div class="tilt-card pass-holo rounded-3xl p-7 sm:p-9 text-center space-y-4 shadow-2xl" onmousemove="tiltEl(event, this)" onmouseleave="resetTilt(this)">
+          <div class="tilt-depth space-y-3">
+            <div class="w-14 h-14 rounded-full bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 flex items-center justify-center mx-auto">
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div class="text-xs font-latin uppercase tracking-widest text-[#DFA76E]">Official Candidate Entry Pass</div>
+            <h4 class="font-display text-3xl font-bold gold-gradient-text">بطاقة مشارك — العربي ٢٠٢٦</h4>
+            <p class="text-xs text-[#F8EFE6]/85">تمت المزامنة الفورية مع إدارة البرنامج بدون الحاجة لأي تحديث يدوي.</p>
+            <div class="bg-[#120703]/85 border border-[#DFA76E]/40 rounded-2xl p-4 max-w-md mx-auto">
+              <div class="text-[11px] text-[#DFA76E]">رقم التسجيل / Candidate ID</div>
+              <div id="passCode" class="font-latin text-2xl font-extrabold text-[#FCE7CC] tracking-widest mt-1">ARB-2026-0001</div>
+              <div id="passDetails" class="text-sm text-[#F8EFE6]/85 mt-1.5"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 2: ADMIN DASHBOARD ==================== -->
+    <section id="viewAdmin" class="hidden space-y-6">
+
+      <!-- Admin Login Gate -->
+      <div id="adminLoginGate" class="max-w-md mx-auto gold-border-card rounded-3xl p-7 sm:p-8 space-y-5 my-8">
+        <div class="text-center space-y-2">
+          <div class="w-12 h-12 rounded-2xl bg-[#DFA76E]/20 border border-[#DFA76E]/40 text-[#FCE7CC] flex items-center justify-center mx-auto font-display text-2xl font-bold">
+            ع
+          </div>
+          <h3 class="text-xl font-bold text-[#FCE7CC]">دخول إدارة البرنامج</h3>
+          <p class="text-xs text-[#DFA76E]/75 font-latin">Al-Arabi Program Admin Portal</p>
+        </div>
+
+        <form id="adminLoginForm" class="space-y-4">
+          <div>
+            <label class="block text-xs text-[#FCE7CC]/90 font-latin mb-1.5">Admin Email</label>
+            <input id="adminEmailInput" type="text" required placeholder="alarabi@dh" dir="ltr"
+              class="input-royal w-full rounded-xl px-4 py-2.5 text-sm font-latin text-left" />
+          </div>
+          <div>
+            <label class="block text-xs text-[#FCE7CC]/90 font-latin mb-1.5">Password</label>
+            <input id="adminPassInput" type="password" required placeholder="••••••••••" dir="ltr"
+              class="input-royal w-full rounded-xl px-4 py-2.5 text-sm font-latin text-left" />
+          </div>
+          <button type="submit" class="btn-gold w-full py-3 rounded-xl text-sm font-latin">
+            Sign In to Live Dashboard
+          </button>
+        </form>
+      </div>
+
+      <!-- Authenticated Admin Content -->
+      <div id="adminDashboardContent" class="hidden space-y-6">
+        <!-- KPI Row -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="gold-border-card rounded-2xl p-5">
+            <div class="text-xs text-[#DFA76E]/80">إجمالي المسجلين • Total</div>
+            <div id="statTotal" class="font-latin text-3xl font-bold text-[#FCE7CC] mt-1">0</div>
+          </div>
+          <div class="gold-border-card rounded-2xl p-5">
+            <div class="text-xs text-emerald-300/80">تم التحقق • Verified</div>
+            <div id="statVerified" class="font-latin text-3xl font-bold text-emerald-300 mt-1">0</div>
+          </div>
+          <div class="gold-border-card rounded-2xl p-5">
+            <div class="text-xs text-amber-300/80">قيد المراجعة • Pending</div>
+            <div id="statPending" class="font-latin text-3xl font-bold text-amber-300 mt-1">0</div>
+          </div>
+          <div class="gold-border-card rounded-2xl p-5">
+            <div class="text-xs text-[#DFA76E]/80">إجمالي الرسوم • Revenue</div>
+            <div id="statRevenue" class="font-latin text-3xl font-bold gold-gradient-text mt-1">₹0</div>
+          </div>
+        </div>
+
+        <!-- Controls Bar -->
+        <div class="gold-border-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex flex-wrap items-center gap-2.5 flex-1 min-w-[240px]">
+            <input id="adminSearch" type="text" oninput="renderAdmin()" placeholder="ابحث بالاسم أو الكلية أو الكود..."
+              class="input-royal rounded-xl px-3.5 py-2 text-sm flex-1 min-w-[180px]" />
+            <select id="adminStatusFilter" onchange="renderAdmin()" class="input-royal rounded-xl px-3 py-2 text-sm font-latin">
+              <option value="all">All Status</option>
+              <option value="pending">Pending</option>
+              <option value="verified">Verified</option>
+              <option value="rejected">Rejected</option>
+            </select>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="exportCsv()" class="px-3.5 py-2 rounded-xl bg-[#DFA76E]/15 hover:bg-[#DFA76E]/25 border border-[#DFA76E]/30 text-[#FCE7CC] text-xs font-latin font-medium transition">
+              Export CSV
+            </button>
+            <button onclick="openFirebaseModal()" class="btn-gold px-3.5 py-2 rounded-xl text-xs font-latin">
+              Connect Live Firebase
+            </button>
+            <button onclick="adminLogout()" class="px-3 py-2 rounded-xl bg-rose-500/15 hover:bg-rose-500/30 border border-rose-500/30 text-rose-200 text-xs font-latin transition">
+              Sign Out
+            </button>
+          </div>
+        </div>
+
+        <!-- Candidates Table (Strictly Ordered Newest First) -->
+        <div class="gold-border-card rounded-2xl overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-right text-sm">
+              <thead class="bg-[#120703]/90 text-[#DFA76E] text-xs border-b border-[#DFA76E]/20">
+                <tr>
+                  <th class="py-3.5 px-4 font-latin"># / ID</th>
+                  <th class="py-3.5 px-4">اسم المشارك</th>
+                  <th class="py-3.5 px-4">العمر</th>
+                  <th class="py-3.5 px-4">كلية</th>
+                  <th class="py-3.5 px-4">الإيصال</th>
+                  <th class="py-3.5 px-4">الحالة</th>
+                  <th class="py-3.5 px-4 text-left">إجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="adminTableBody" class="divide-y divide-[#DFA76E]/10"></tbody>
+            </table>
+          </div>
+          <div id="adminEmptyState" class="hidden py-12 text-center text-sm text-[#DFA76E]/70">
+            لا توجد نتائج مطابقة للبحث الحالي.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 3: QR STUDIO ==================== -->
+    <section id="viewQr" class="hidden space-y-6">
+      <div class="gold-border-card rounded-3xl p-6 sm:p-8">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-[#DFA76E]/15 pb-4 mb-6">
+          <div>
+            <h3 class="text-xl font-bold text-[#FCE7CC]">استوديو رموز QR والطباعة</h3>
+            <p class="text-xs text-[#DFA76E]/75 font-latin mt-0.5">Generate & Download Branded QR Codes for Posters & WhatsApp</p>
+          </div>
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <input id="customAppUrl" type="url" value="https://alarabi-program.vercel.app" dir="ltr"
+              class="input-royal rounded-xl px-3 py-2 text-xs font-latin flex-1 sm:w-72 text-left" />
+            <button onclick="regenerateAppQr()" class="btn-gold px-4 py-2 rounded-xl text-xs font-latin">Update QR</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-[#120703]/75 border border-[#DFA76E]/25 rounded-2xl p-6 text-center space-y-4">
+            <div class="text-xs text-[#DFA76E] font-latin uppercase tracking-wider">Program Registration Link</div>
+            <h4 class="font-display text-2xl font-bold gold-gradient-text">سجّل الآن في مسابقة العربي</h4>
+            <div class="bg-white p-4 rounded-2xl inline-block shadow-xl">
+              <div id="portalQrBox" class="qr-box"></div>
+            </div>
+            <p id="portalUrlLabel" class="text-xs font-latin text-[#FCE7CC]/80 break-all" dir="ltr">https://alarabi-program.vercel.app</p>
+            <button onclick="downloadQr('portalQrBox', 'al-arabi-registration-qr.png')" class="btn-gold px-5 py-2.5 rounded-xl text-xs font-latin">
+              Download Registration QR (PNG)
+            </button>
+          </div>
+
+          <div class="bg-[#120703]/75 border border-[#DFA76E]/25 rounded-2xl p-6 text-center space-y-4">
+            <div class="text-xs text-emerald-300 font-latin uppercase tracking-wider">Fixed ₹50 Registration Fee</div>
+            <h4 class="font-display text-2xl font-bold text-[#FCE7CC]">دفع رسوم الاشتراك (₹50)</h4>
+            <div class="bg-white p-4 rounded-2xl inline-block shadow-xl">
+              <div id="studioUpiQrBox" class="qr-box"></div>
+            </div>
+            <p class="text-xs font-latin text-[#FCE7CC]/80" dir="ltr">UPI Mobile: +91 90725 84470 • Amount: ₹50</p>
+            <button onclick="downloadQr('studioUpiQrBox', 'al-arabi-upi-50-qr.png')" class="px-5 py-2.5 rounded-xl bg-emerald-600/30 hover:bg-emerald-600/45 border border-emerald-500/40 text-emerald-200 text-xs font-latin font-semibold transition">
+              Download Payment QR (PNG)
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Screenshot Inspector Modal -->
+  <div id="imgModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" onclick="closeImgModal()">
+    <div class="gold-border-card rounded-2xl max-w-lg w-full p-4 space-y-3" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between">
+        <h4 id="imgModalTitle" class="text-sm font-bold text-[#FCE7CC]">إيصال الدفع</h4>
+        <button onclick="closeImgModal()" class="text-[#DFA76E] hover:text-white text-lg px-2">✕</button>
+      </div>
+      <img id="imgModalSrc" src="" alt="Receipt" class="w-full max-h-[70vh] object-contain rounded-xl bg-black/40" />
+    </div>
+  </div>
+
+  <!-- Firebase Live Config Modal -->
+  <div id="fbModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" onclick="closeFirebaseModal()">
+    <div class="gold-border-card rounded-2xl max-w-xl w-full p-6 space-y-4" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between border-b border-[#DFA76E]/20 pb-3">
+        <div>
+          <h4 class="text-base font-bold text-[#FCE7CC] font-latin">Firebase Real-Time Cloud Sync (onSnapshot)</h4>
+          <p class="text-xs text-[#DFA76E]/75 font-latin">Zero push/pull: paste your Firebase Web Config JSON for instant live sync</p>
+        </div>
+        <button onclick="closeFirebaseModal()" class="text-[#DFA76E] hover:text-white text-lg px-2">✕</button>
+      </div>
+      <textarea id="fbConfigInput" rows="7" dir="ltr" placeholder='{"apiKey": "...", "authDomain": "...", "projectId": "...", "storageBucket": "...", "messagingSenderId": "...", "appId": "..."}'
+        class="input-royal w-full rounded-xl p-3 text-xs font-latin text-left"></textarea>
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <span class="text-[11px] text-[#F8EFE6]/65 font-latin">Uses BroadcastChannel + localStorage automatically when empty.</span>
+        <div class="flex gap-2">
+          <button onclick="closeFirebaseModal()" class="px-4 py-2 rounded-xl border border-[#DFA76E]/30 text-xs text-[#FCE7CC] font-latin">Close</button>
+          <button onclick="saveFirebaseConfig()" class="btn-gold px-4 py-2 rounded-xl text-xs font-latin">Connect Firestore</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'al_arabi_2026_candidates_v2';
+    const FB_CONFIG_KEY = 'al_arabi_2026_fb_config';
+    const ADMIN_SESSION_KEY = 'al_arabi_admin_auth';
+    const ADMIN_EMAIL = 'alarabi@dh';
+    const ADMIN_PASS = '8606971566';
+    const UPI_PHONE = '9072584470';
+    const UPI_URI = `upi://pay?pa=${UPI_PHONE}@upi&pn=Al-Arabi%20Darul%20Huda&am=50&cu=INR&tn=Al-Arabi%20Registration`;
+
+    let candidates = [];
+    let currentScreenshotData = '';
+    let bc = null;
+    try { bc = new BroadcastChannel('al_arabi_live_sync_v2'); } catch (e) {}
+
+    const SAMPLE_CANDIDATES = [
+      {
+        id: 'ARB-2026-1043',
+        name: 'سلمان الفارسي',
+        age: 20,
+        college: 'كلية الدعوة والحضارة',
+        phone: '+91 99470 55667',
+        status: 'verified',
+        screenshot: '',
+        createdAt: '2026-11-18T10:30:00Z'
+      },
+      {
+        id: 'ARB-2026-1042',
+        name: 'عبد الله فرحان',
+        age: 19,
+        college: 'كلية الشريعة وأصول الدين',
+        phone: '+91 97450 33445',
+        status: 'pending',
+        screenshot: '',
+        createdAt: '2026-11-18T10:05:00Z'
+      },
+      {
+        id: 'ARB-2026-1041',
+        name: 'محمد أنس الهدوي',
+        age: 21,
+        college: 'كلية اللغات والآداب',
+        phone: '+91 98460 11223',
+        status: 'verified',
+        screenshot: '',
+        createdAt: '2026-11-18T09:15:00Z'
+      }
+    ];
+
+    function sortCandidatesChronologically() {
+      candidates.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    }
+
+    function updateLiveTicker() {
+      const el = document.getElementById('liveTickerText');
+      if (!el || candidates.length === 0) return;
+      const latest = candidates[0];
+      el.textContent = `آخر تسجيل مباشر: ${latest.name} (${latest.college}) • ${latest.id} — إجمالي المسجلين: ${candidates.length}`;
+    }
+
+    function loadCandidates() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          candidates = JSON.parse(raw);
+        } else {
+          candidates = [...SAMPLE_CANDIDATES];
+          saveCandidates(false);
+        }
+      } catch (e) {
+        candidates = [...SAMPLE_CANDIDATES];
+      }
+      sortCandidatesChronologically();
+      updateLiveTicker();
+      renderAdmin();
+    }
+
+    function saveCandidates(broadcast = true) {
+      sortCandidatesChronologically();
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(candidates));
+      } catch (e) {}
+      if (broadcast && bc) {
+        bc.postMessage({ type: 'SYNC_CANDIDATES', data: candidates });
+      }
+      updateLiveTicker();
+      renderAdmin();
+    }
+
+    if (bc) {
+      bc.onmessage = (ev) => {
+        if (ev.data && ev.data.type === 'SYNC_CANDIDATES') {
+          candidates = ev.data.data;
+          sortCandidatesChronologically();
+          updateLiveTicker();
+          renderAdmin();
+          showToast('تحديث مباشر جديد (Live Sync)', 'success');
+        }
+      };
+    }
+
+    window.addEventListener('storage', (e) => {
+      if (e.key === STORAGE_KEY && e.newValue) {
+        try {
+          candidates = JSON.parse(e.newValue);
+          sortCandidatesChronologically();
+          updateLiveTicker();
+          renderAdmin();
+        } catch (err) {}
+      }
+    });
+
+    // 3D Tilt interaction
+    function tiltEl(e, card) {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `rotateY(${x * 14}deg) rotateX(${-y * 14}deg) scale(1.02)`;
+    }
+    function resetTilt(card) {
+      card.style.transform = 'rotateY(0deg) rotateX(0deg) scale(1)';
+    }
+
+    // Three.js 3D Heritage Rub el Hizb Star + Golden Dust
+    function initHero3D() {
+      const canvas = document.getElementById('hero3dCanvas');
+      if (!canvas || typeof THREE === 'undefined') return;
+      try {
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+        camera.position.z = 7.5;
+
+        const group = new THREE.Group();
+        const goldMat = new THREE.MeshBasicMaterial({ color: 0xDFA76E, wireframe: true, transparent: true, opacity: 0.28 });
+        const sq1 = new THREE.Mesh(new THREE.BoxGeometry(2.8, 2.8, 0.25), goldMat);
+        const sq2 = new THREE.Mesh(new THREE.BoxGeometry(2.8, 2.8, 0.25), goldMat);
+        sq2.rotation.z = Math.PI / 4;
+        const ring = new THREE.Mesh(new THREE.TorusGeometry(2.45, 0.03, 12, 64), new THREE.MeshBasicMaterial({ color: 0xFCE7CC, transparent: true, opacity: 0.22 }));
+        group.add(sq1, sq2, ring);
+        scene.add(group);
+
+        // Floating golden dust particles
+        const count = 90;
+        const pos = new Float32Array(count * 3);
+        for (let i = 0; i < count * 3; i++) pos[i] = (Math.random() - 0.5) * 12;
+        const pGeo = new THREE.BufferGeometry();
+        pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+        const pMat = new THREE.PointsMaterial({ color: 0xFCE7CC, size: 0.055, transparent: true, opacity: 0.55 });
+        const particles = new THREE.Points(pGeo, pMat);
+        scene.add(particles);
+
+        function resize() {
+          const w = canvas.parentElement.clientWidth || 800;
+          const h = canvas.parentElement.clientHeight || 340;
+          renderer.setSize(w, h, false);
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        let targetX = 0, targetY = 0;
+        canvas.parentElement.addEventListener('mousemove', (e) => {
+          const r = canvas.parentElement.getBoundingClientRect();
+          targetX = ((e.clientX - r.left) / r.width - 0.5) * 0.6;
+          targetY = ((e.clientY - r.top) / r.height - 0.5) * 0.6;
+        });
+
+        function animate() {
+          requestAnimationFrame(animate);
+          group.rotation.z += 0.0025;
+          group.rotation.x += (targetY - group.rotation.x) * 0.05;
+          group.rotation.y += (targetX - group.rotation.y) * 0.05;
+          particles.rotation.y += 0.0008;
+          renderer.render(scene, camera);
+        }
+        animate();
+      } catch (e) {}
+    }
+
+    // Stepper State
+    function updateStepper(done4 = false) {
+      const s1 = document.getElementById('fName').value.trim() && document.getElementById('fAge').value.trim() && document.getElementById('fCollege').value.trim();
+      const s3 = !!currentScreenshotData;
+      const setB = (id, active) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.className = `w-8 h-8 rounded-full flex items-center justify-center text-xs font-latin font-bold transition-all ${active ? 'step-badge-active' : 'step-badge-idle'}`;
+      };
+      setB('stepBadge1', true);
+      setB('stepBadge2', !!s1);
+      setB('stepBadge3', !!s1);
+      setB('stepBadge4', done4 || (!!s1 && s3));
+    }
+
+    // Navigation & Admin Auth
+    function isAdminAuthed() {
+      try { return sessionStorage.getItem(ADMIN_SESSION_KEY) === '1'; } catch (e) { return false; }
+    }
+    function syncAdminGate() {
+      const authed = isAdminAuthed();
+      document.getElementById('adminLoginGate').classList.toggle('hidden', authed);
+      document.getElementById('adminDashboardContent').classList.toggle('hidden', !authed);
+    }
+
+    document.getElementById('adminLoginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('adminEmailInput').value.trim().toLowerCase();
+      const pass = document.getElementById('adminPassInput').value.trim();
+      if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
+        try { sessionStorage.setItem(ADMIN_SESSION_KEY, '1'); } catch (err) {}
+        syncAdminGate();
+        renderAdmin();
+        showToast('مرحباً بك في لوحة الإدارة المباشرة', 'success');
+      } else {
+        showToast('البريد الإلكتروني أو كلمة المرور غير صحيحة', 'error');
+      }
+    });
+
+    function adminLogout() {
+      try { sessionStorage.removeItem(ADMIN_SESSION_KEY); } catch (e) {}
+      syncAdminGate();
+      showToast('تم تسجيل الخروج من الإدارة', 'info');
+    }
+
+    function switchView(view) {
+      const views = { register: 'viewRegister', admin: 'viewAdmin', qr: 'viewQr' };
+      const navs = { register: 'navRegister', admin: 'navAdmin', qr: 'navQr' };
+      Object.keys(views).forEach(k => {
+        document.getElementById(views[k]).classList.toggle('hidden', k !== view);
+        const btn = document.getElementById(navs[k]);
+        if (k === view) {
+          btn.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all bg-[#DFA76E] text-[#120703] flex items-center gap-1.5';
+        } else {
+          btn.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all text-[#FCE7CC]/80 hover:text-white flex items-center gap-1.5';
+        }
+      });
+      if (view === 'admin') syncAdminGate();
+    }
+
+    function setCollege(val) {
+      document.getElementById('fCollege').value = val;
+      updateStepper();
+    }
+
+    // Compress & preview uploaded screenshot
+    document.getElementById('fScreenshot').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const maxW = 720;
+          const scale = Math.min(1, maxW / img.width);
+          canvas.width = img.width * scale;
+          canvas.height = img.height * scale;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          currentScreenshotData = canvas.toDataURL('image/jpeg', 0.75);
+          document.getElementById('uploadPreviewImg').src = currentScreenshotData;
+          document.getElementById('uploadFileName').textContent = file.name;
+          document.getElementById('uploadPlaceholder').classList.add('hidden');
+          document.getElementById('uploadPreviewWrap').classList.remove('hidden');
+          updateStepper();
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Form submission
+    document.getElementById('regForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('fName').value.trim();
+      const age = parseInt(document.getElementById('fAge').value, 10);
+      const college = document.getElementById('fCollege').value.trim();
+      const phone = document.getElementById('fPhone').value.trim();
+
+      if (!currentScreenshotData) {
+        showToast('يرجى إرفاق لقطة شاشة الدفع (₹50) في الخطوة 03 أولاً', 'error');
+        return;
+      }
+
+      const id = 'ARB-2026-' + Math.floor(1000 + Math.random() * 9000);
+      const newEntry = {
+        id,
+        name,
+        age,
+        college,
+        phone,
+        status: 'pending',
+        screenshot: currentScreenshotData,
+        createdAt: new Date().toISOString()
+      };
+
+      candidates.unshift(newEntry);
+      saveCandidates(true);
+
+      if (window.__fbAddCandidate) {
+        try { await window.__fbAddCandidate(newEntry); } catch (err) {}
+      }
+
+      document.getElementById('passCode').textContent = id;
+      document.getElementById('passDetails').textContent = `${name} • ${college} • ${age} سنة`;
+      const passCard = document.getElementById('successPassCard');
+      passCard.classList.remove('hidden');
+      passCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      updateStepper(true);
+
+      e.target.reset();
+      currentScreenshotData = '';
+      document.getElementById('uploadPlaceholder').classList.remove('hidden');
+      document.getElementById('uploadPreviewWrap').classList.add('hidden');
+      showToast('تم التسجيل وإصدار البطاقة الذهبية! رقمك: ' + id, 'success');
+    });
+
+    // Admin Rendering
+    function renderAdmin() {
+      const q = (document.getElementById('adminSearch')?.value || '').trim().toLowerCase();
+      const filterStatus = document.getElementById('adminStatusFilter')?.value || 'all';
+
+      const total = candidates.length;
+      const verified = candidates.filter(c => c.status === 'verified').length;
+      const pending = candidates.filter(c => c.status === 'pending').length;
+
+      document.getElementById('navAdminCount').textContent = total;
+      document.getElementById('statTotal').textContent = total;
+      document.getElementById('statVerified').textContent = verified;
+      document.getElementById('statPending').textContent = pending;
+      document.getElementById('statRevenue').textContent = '₹' + (verified * 50).toLocaleString('en-IN');
+
+      const filtered = candidates.filter(c => {
+        const matchStatus = filterStatus === 'all' || c.status === filterStatus;
+        const matchQ = !q ||
+          c.name.toLowerCase().includes(q) ||
+          c.college.toLowerCase().includes(q) ||
+          c.id.toLowerCase().includes(q);
+        return matchStatus && matchQ;
+      });
+
+      const tbody = document.getElementById('adminTableBody');
+      const empty = document.getElementById('adminEmptyState');
+      if (filtered.length === 0) {
+        tbody.innerHTML = '';
+        empty.classList.remove('hidden');
+        return;
+      }
+      empty.classList.add('hidden');
+
+      const badgeMap = {
+        verified: '<span class="px-2.5 py-0.5 rounded-full text-[11px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-latin">Verified</span>',
+        pending: '<span class="px-2.5 py-0.5 rounded-full text-[11px] bg-amber-500/20 text-amber-300 border border-amber-500/30 font-latin">Pending</span>',
+        rejected: '<span class="px-2.5 py-0.5 rounded-full text-[11px] bg-rose-500/20 text-rose-300 border border-rose-500/30 font-latin">Rejected</span>'
+      };
+
+      tbody.innerHTML = filtered.map((c, idx) => `
+        <tr class="hover:bg-[#DFA76E]/5 transition">
+          <td class="py-3.5 px-4 font-latin text-xs text-[#DFA76E] whitespace-nowrap">
+            <span class="text-[#F8EFE6]/45 mr-1">${idx + 1}.</span>${escapeHtml(c.id)}
+          </td>
+          <td class="py-3.5 px-4 font-medium text-[#FCE7CC]">
+            <div>${escapeHtml(c.name)}</div>
+            ${c.phone ? `<div class="text-[11px] text-[#DFA76E]/70 font-latin" dir="ltr">${escapeHtml(c.phone)}</div>` : ''}
+          </td>
+          <td class="py-3.5 px-4 font-latin text-xs">${c.age}</td>
+          <td class="py-3.5 px-4 text-xs text-[#F8EFE6]/85">${escapeHtml(c.college)}</td>
+          <td class="py-3.5 px-4">
+            ${c.screenshot
+              ? `<button onclick="openImgModal('${c.id}')" class="px-2.5 py-1 rounded-lg bg-[#DFA76E]/15 hover:bg-[#DFA76E]/30 text-[#FCE7CC] text-xs font-latin">View Receipt</button>`
+              : `<span class="text-[11px] text-[#DFA76E]/45 font-latin">Sample</span>`
+            }
+          </td>
+          <td class="py-3.5 px-4">${badgeMap[c.status] || badgeMap.pending}</td>
+          <td class="py-3.5 px-4 text-left whitespace-nowrap">
+            <div class="inline-flex items-center gap-1.5">
+              <button onclick="setStatus('${c.id}', 'verified')" class="px-2 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/35 text-emerald-300 text-xs font-latin">✓</button>
+              <button onclick="setStatus('${c.id}', 'rejected')" class="px-2 py-1 rounded-lg bg-rose-500/20 hover:bg-rose-500/35 text-rose-300 text-xs font-latin">✕</button>
+              <button onclick="deleteCandidate('${c.id}')" class="px-2 py-1 rounded-lg bg-white/5 hover:bg-rose-500/25 text-[#F8EFE6]/60 hover:text-rose-200 text-xs font-latin">Del</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function setStatus(id, status) {
+      const idx = candidates.findIndex(c => c.id === id);
+      if (idx === -1) return;
+      candidates[idx].status = status;
+      saveCandidates(true);
+      if (window.__fbUpdateStatus) {
+        try { await window.__fbUpdateStatus(id, status); } catch (e) {}
+      }
+      showToast(`Updated ${id} → ${status}`, 'success');
+    }
+
+    async function deleteCandidate(id) {
+      candidates = candidates.filter(c => c.id !== id);
+      saveCandidates(true);
+      if (window.__fbDeleteCandidate) {
+        try { await window.__fbDeleteCandidate(id); } catch (e) {}
+      }
+      showToast(`Removed ${id}`, 'info');
+    }
+
+    function openImgModal(id) {
+      const c = candidates.find(x => x.id === id);
+      if (!c || !c.screenshot) return;
+      document.getElementById('imgModalTitle').textContent = `${c.name} (${c.id})`;
+      document.getElementById('imgModalSrc').src = c.screenshot;
+      document.getElementById('imgModal').classList.remove('hidden');
+    }
+    function closeImgModal() { document.getElementById('imgModal').classList.add('hidden'); }
+
+    function exportCsv() {
+      const header = ['Order', 'ID', 'Name', 'Age', 'College', 'Phone', 'Status', 'CreatedAt'];
+      const rows = candidates.map((c, i) => [i + 1, c.id, c.name, c.age, c.college, c.phone || '', c.status, c.createdAt]);
+      const csv = '\uFEFF' + [header, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'al-arabi-registrations-2026.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('CSV exported successfully', 'success');
+    }
+
+    // QR Generation
+    function renderQr(containerId, text, size = 180) {
+      const el = document.getElementById(containerId);
+      if (!el || typeof QRCode === 'undefined') return;
+      el.innerHTML = '';
+      new QRCode(el, {
+        text,
+        width: size,
+        height: size,
+        colorDark: '#120703',
+        colorLight: '#FFFFFF',
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+
+    function regenerateAppQr() {
+      const url = document.getElementById('customAppUrl').value.trim() || 'https://alarabi-program.vercel.app';
+      document.getElementById('portalUrlLabel').textContent = url;
+      renderQr('portalQrBox', url, 190);
+      showToast('Updated Registration QR', 'success');
+    }
+
+    function downloadQr(containerId, filename) {
+      const el = document.getElementById(containerId);
+      const canvas = el.querySelector('canvas');
+      const img = el.querySelector('img');
+      const dataUrl = canvas ? canvas.toDataURL('image/png') : (img ? img.src : '');
+      if (!dataUrl) return;
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = filename;
+      a.click();
+      showToast('QR downloaded: ' + filename, 'success');
+    }
+
+    function copyText(text, msg) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => showToast(msg, 'success')).catch(() => fallbackCopy(text, msg));
+      } else {
+        fallbackCopy(text, msg);
+      }
+    }
+    function fallbackCopy(text, msg) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); showToast(msg, 'success'); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+
+    function showToast(msg, type = 'info') {
+      const box = document.getElementById('toastBox');
+      const el = document.createElement('div');
+      const colors = {
+        success: 'bg-emerald-950/95 border-emerald-500/50 text-emerald-200',
+        error: 'bg-rose-950/95 border-rose-500/50 text-rose-200',
+        info: 'bg-[#2B1208]/95 border-[#DFA76E]/50 text-[#FCE7CC]'
+      };
+      el.className = `pointer-events-auto px-4 py-3 rounded-xl border shadow-2xl text-xs sm:text-sm text-center backdrop-blur-md transition-all ${colors[type] || colors.info}`;
+      el.textContent = msg;
+      box.appendChild(el);
+      setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 300); }, 3200);
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, m => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));
+    }
+
+    // Firebase Dynamic Connection (Real-time onSnapshot, zero push/pull)
+    function openFirebaseModal() {
+      try {
+        const saved = localStorage.getItem(FB_CONFIG_KEY);
+        if (saved) document.getElementById('fbConfigInput').value = saved;
+      } catch (e) {}
+      document.getElementById('fbModal').classList.remove('hidden');
+    }
+    function closeFirebaseModal() { document.getElementById('fbModal').classList.add('hidden'); }
+
+    async function saveFirebaseConfig() {
+      const raw = document.getElementById('fbConfigInput').value.trim();
+      if (!raw) return;
+      try {
+        const cfg = JSON.parse(raw);
+        localStorage.setItem(FB_CONFIG_KEY, JSON.stringify(cfg, null, 2));
+        await initFirebaseLive(cfg);
+        closeFirebaseModal();
+      } catch (e) {
+        showToast('Invalid Firebase JSON config', 'error');
+      }
+    }
+
+    async function initFirebaseLive(cfg) {
+      try {
+        const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js');
+        const { getFirestore, collection, doc, setDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy } =
+          await import('https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js');
+
+        const app = initializeApp(cfg);
+        const db = getFirestore(app);
+        const colRef = collection(db, 'al_arabi_registrations');
+
+        window.__fbAddCandidate = (entry) => setDoc(doc(db, 'al_arabi_registrations', entry.id), entry);
+        window.__fbUpdateStatus = (id, status) => updateDoc(doc(db, 'al_arabi_registrations', id), { status });
+        window.__fbDeleteCandidate = (id) => deleteDoc(doc(db, 'al_arabi_registrations', id));
+
+        onSnapshot(query(colRef, orderBy('createdAt', 'desc')), (snap) => {
+          candidates = snap.docs.map(d => d.data());
+          sortCandidatesChronologically();
+          updateLiveTicker();
+          renderAdmin();
+          document.getElementById('syncLabel').textContent = 'Firebase Live';
+        });
+
+        showToast('Connected to Firebase Firestore (onSnapshot)', 'success');
+      } catch (e) {
+        showToast('Firebase connection failed — staying in Live Auto-Sync', 'error');
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('upiDeepLink').href = UPI_URI;
+      renderQr('upiQrBox', UPI_URI, 180);
+      renderQr('studioUpiQrBox', UPI_URI, 190);
+      renderQr('portalQrBox', document.getElementById('customAppUrl').value, 190);
+      initHero3D();
+      loadCandidates();
+      syncAdminGate();
+
+      try {
+        const savedFb = localStorage.getItem(FB_CONFIG_KEY);
+        if (savedFb) initFirebaseLive(JSON.parse(savedFb));
+      } catch (e) {}
+    });
+  </script>
+</body>
+</html>
