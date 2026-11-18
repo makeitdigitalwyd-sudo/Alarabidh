@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    direction: rtl;
+    scroll-behavior: smooth;
+    background-color: #160904;
+    color: #FAF3E6;
+  }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background-color: #160904;
+    color: #FAF3E6;
+    overflow-x: hidden;
+  }
+}
+
+/* Subtle Mashrabiya Geometric Latticework Overlay */
+.mashrabiya-bg {
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C59B27' stroke-width='0.6' stroke-opacity='0.11'%3E%3Cpath d='M40 0 L51.7 28.3 L80 40 L51.7 51.7 L40 80 L28.3 51.7 L0 40 L28.3 28.3 Z'/%3E%3Crect x='14' y='14' width='52' height='52' transform='rotate(45 40 40)'/%3E%3Ccircle cx='40' cy='40' r='10'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 80px 80px;
+}
+
+/* Radial Golden Ambient Spotlighting */
+.ambient-spotlight {
+  background:
+    radial-gradient(ellipse 65% 45% at 50% 10%, rgba(197, 155, 39, 0.16) 0%, rgba(197, 155, 39, 0.04) 45%, transparent 75%),
+    radial-gradient(circle at 15% 65%, rgba(226, 190, 111, 0.07) 0%, transparent 45%),
+    radial-gradient(circle at 85% 75%, rgba(197, 155, 39, 0.08) 0%, transparent 45%);
+}
+
+/* Champagne Gold Text Gradient */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #FAF3E6 0%, #F5E1A4 35%, #E2BE6F 65%, #C59B27 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Burnished Gold Shimmer Border */
+.gold-border-glow {
+  border: 1px solid rgba(197, 155, 39, 0.45);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(245, 225, 164, 0.18);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #160904;
+}
+::-webkit-scrollbar-thumb {
+  background: #4A2111;
+  border-radius: 9999px;
+  border: 1px solid rgba(197, 155, 39, 0.3);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C59B27;
+}
