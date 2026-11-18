@@ -205,7 +205,7 @@
     <section id="viewRegister" class="space-y-8">
 
       <!-- 3D Heritage Hero Banner -->
-      <div class="gold-border-card rounded-3xl p-6 sm:p-10 relative overflow-hidden text-center min-h-[340px] flex flex-col justify-center">
+      <div class="gold-border-card rounded-3xl p-4 sm:p-10 relative overflow-hidden text-center min-h-[260px] sm:min-h-[340px] flex flex-col justify-center">
         <!-- Three.js 3D Heritage Star Canvas -->
         <canvas id="hero3dCanvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-65"></canvas>
         <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-[#DFA76E] to-transparent opacity-70"></div>
@@ -223,23 +223,23 @@
           </p>
 
           <!-- 3D Tilt Prize Medallions -->
-          <div class="tilt-stage grid grid-cols-3 gap-3 sm:gap-6 max-w-xl mx-auto pt-4">
-            <div class="tilt-card medallion rounded-2xl p-3 sm:p-4" onmousemove="tiltEl(event, this)" onmouseleave="resetTilt(this)">
+          <div class="tilt-stage grid grid-cols-3 gap-2 sm:gap-6 max-w-xl mx-auto pt-4">
+            <div class="tilt-card medallion rounded-2xl p-2.5 sm:p-4" onmousemove="tiltEl(event, this)" onmouseleave="resetTilt(this)">
               <div class="tilt-depth">
-                <div class="text-[11px] text-[#DFA76E] font-medium">المركز الثاني</div>
-                <div class="font-latin text-xl sm:text-2xl font-bold text-[#FCE7CC] mt-0.5">₹3,333</div>
+                <div class="text-[10px] sm:text-[11px] text-[#DFA76E] font-medium">المركز الثاني</div>
+                <div class="font-latin text-base sm:text-2xl font-bold text-[#FCE7CC] mt-0.5 whitespace-nowrap">₹3,333</div>
               </div>
             </div>
-            <div class="tilt-card medallion rounded-2xl p-3.5 sm:p-5 -mt-2 border-[#FCE7CC]/75" onmousemove="tiltEl(event, this)" onmouseleave="resetTilt(this)">
+            <div class="tilt-card medallion rounded-2xl p-2.5 sm:p-5 -mt-1.5 sm:-mt-2 border-[#FCE7CC]/75" onmousemove="tiltEl(event, this)" onmouseleave="resetTilt(this)">
               <div class="tilt-depth">
-                <div class="text-xs text-[#FCE7CC] font-bold">المركز الأول</div>
-                <div class="font-latin text-2xl sm:text-3xl font-extrabold gold-gradient-text mt-0.5">₹4,444</div>
+                <div class="text-[11px] sm:text-xs text-[#FCE7CC] font-bold">المركز الأول</div>
+                <div class="font-latin text-lg sm:text-3xl font-extrabold gold-gradient-text mt-0.5 whitespace-nowrap">₹4,444</div>
               </div>
             </div>
-            <div class="tilt-card medallion rounded-2xl p-3 sm:p-4" onmousemove="tiltEl(event, this)" onmouseleave="resetTilt(this)">
+            <div class="tilt-card medallion rounded-2xl p-2.5 sm:p-4" onmousemove="tiltEl(event, this)" onmouseleave="resetTilt(this)">
               <div class="tilt-depth">
-                <div class="text-[11px] text-[#DFA76E] font-medium">المركز الثالث</div>
-                <div class="font-latin text-xl sm:text-2xl font-bold text-[#FCE7CC] mt-0.5">₹2,222</div>
+                <div class="text-[10px] sm:text-[11px] text-[#DFA76E] font-medium">المركز الثالث</div>
+                <div class="font-latin text-base sm:text-2xl font-bold text-[#FCE7CC] mt-0.5 whitespace-nowrap">₹2,222</div>
               </div>
             </div>
           </div>
@@ -348,16 +348,17 @@
               <p class="text-[11px] text-[#DFA76E]/80 mt-2.5 font-latin">GPay • PhonePe • Paytm • BHIM</p>
             </div>
 
-            <div class="bg-[#120703]/80 border border-[#DFA76E]/25 rounded-2xl p-5 space-y-4 text-center md:text-right">
-              <div>
-                <div class="text-xs text-[#DFA76E]/80">رقم الدفع الرسمي / Official Payment Number</div>
-                <div class="flex items-center justify-center md:justify-start gap-2.5 mt-1.5" dir="ltr">
-                  <span class="font-latin text-xl font-bold text-[#FCE7CC] tracking-wide">+91 90725 84470</span>
-                  <button type="button" onclick="copyText('+91 90725 84470', 'تم نسخ الرقم +91 90725 84470')"
-                    class="px-3 py-1 rounded-lg bg-[#DFA76E]/15 hover:bg-[#DFA76E]/30 text-[#FCE7CC] text-xs font-latin transition">
-                    Copy
+            <div class="bg-[#120703]/80 border border-[#DFA76E]/25 rounded-2xl p-4 sm:p-5 space-y-4 text-center md:text-right">
+              <div class="space-y-2">
+                <div class="text-xs text-[#DFA76E]/80">معرف الدفع / Official UPI ID (Althaf Ansar)</div>
+                <div class="flex flex-wrap items-center justify-center md:justify-start gap-2" dir="ltr">
+                  <span class="font-latin text-sm sm:text-base font-bold text-[#FCE7CC] bg-[#1E0C05] px-3 py-1.5 rounded-lg border border-[#DFA76E]/25">althafansar55@okaxis</span>
+                  <button type="button" onclick="copyText('althafansar55@okaxis', 'تم نسخ معرف UPI')"
+                    class="px-3 py-1.5 rounded-lg bg-[#DFA76E]/15 hover:bg-[#DFA76E]/30 text-[#FCE7CC] text-xs font-latin transition min-h-[34px]">
+                    Copy UPI
                   </button>
                 </div>
+                <div class="flex flex-wrap items-center justify-center md:justify-start gap-2 text-xs text-[#DFA76E]/75 pt-1"><span>رقم الدفع / Phone:</span> <span class="font-latin text-[#FCE7CC]" dir="ltr">+91 90725 84470</span> <button type="button" onclick="copyText('+91 90725 84470', 'تم نسخ الرقم +91 90725 84470')" class="px-2 py-0.5 rounded bg-[#DFA76E]/15 hover:bg-[#DFA76E]/30 text-[#FCE7CC] text-[11px] font-latin">Copy</button></div>
               </div>
 
               <div class="flex flex-wrap justify-center md:justify-start gap-2.5">
@@ -511,8 +512,11 @@
           </div>
         </div>
 
-        <!-- Candidates Table (Strictly Ordered Newest First) -->
-        <div class="gold-border-card rounded-2xl overflow-hidden">
+        <!-- Mobile Card List (Phone-Friendly) -->
+        <div id="adminMobileCards" class="md:hidden space-y-3"></div>
+
+        <!-- Desktop Candidates Table (Strictly Ordered Newest First) -->
+        <div class="hidden md:block gold-border-card rounded-2xl overflow-hidden">
           <div class="overflow-x-auto">
             <table class="w-full text-right text-sm">
               <thead class="bg-[#120703]/90 text-[#DFA76E] text-xs border-b border-[#DFA76E]/20">
@@ -529,9 +533,9 @@
               <tbody id="adminTableBody" class="divide-y divide-[#DFA76E]/10"></tbody>
             </table>
           </div>
-          <div id="adminEmptyState" class="hidden py-12 text-center text-sm text-[#DFA76E]/70">
-            لا توجد نتائج مطابقة للبحث الحالي.
-          </div>
+        </div>
+        <div id="adminEmptyState" class="hidden gold-border-card rounded-2xl py-12 text-center text-sm text-[#DFA76E]/70">
+          لا توجد نتائج مطابقة للبحث الحالي.
         </div>
       </div>
     </section>
@@ -570,7 +574,7 @@
             <div class="bg-white p-4 rounded-2xl inline-block shadow-xl">
               <div id="studioUpiQrBox" class="qr-box"></div>
             </div>
-            <p class="text-xs font-latin text-[#FCE7CC]/80" dir="ltr">UPI Mobile: +91 90725 84470 • Amount: ₹50</p>
+            <p class="text-xs font-latin text-[#FCE7CC]/80" dir="ltr">UPI: althafansar55@okaxis (Althaf Ansar) • ₹50</p>
             <button onclick="downloadQr('studioUpiQrBox', 'al-arabi-upi-50-qr.png')" class="px-5 py-2.5 rounded-xl bg-emerald-600/30 hover:bg-emerald-600/45 border border-emerald-500/40 text-emerald-200 text-xs font-latin font-semibold transition">
               Download Payment QR (PNG)
             </button>
@@ -620,7 +624,7 @@
     const ADMIN_EMAIL = 'alarabi@dh';
     const ADMIN_PASS = '8606971566';
     const UPI_PHONE = '9072584470';
-    const UPI_URI = `upi://pay?pa=${UPI_PHONE}@upi&pn=Al-Arabi%20Darul%20Huda&am=50&cu=INR&tn=Al-Arabi%20Registration`;
+    const UPI_URI = 'upi://pay?pa=althafansar55@okaxis&pn=Althaf%20Ansar&aid=uGICAgMCE3ojdRQ&am=50&cu=INR&tn=Al-Arabi%20Registration';
 
     let candidates = [];
     let currentScreenshotData = '';
@@ -956,9 +960,11 @@
       });
 
       const tbody = document.getElementById('adminTableBody');
+      const mobileCards = document.getElementById('adminMobileCards');
       const empty = document.getElementById('adminEmptyState');
       if (filtered.length === 0) {
         tbody.innerHTML = '';
+        if (mobileCards) mobileCards.innerHTML = '';
         empty.classList.remove('hidden');
         return;
       }
@@ -997,6 +1003,33 @@
           </td>
         </tr>
       `).join('');
+
+      if (mobileCards) {
+        mobileCards.innerHTML = filtered.map((c, idx) => `
+          <div class="gold-border-card rounded-2xl p-4 space-y-3">
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <div class="font-latin text-[11px] text-[#DFA76E]">#${idx + 1} • ${escapeHtml(c.id)}</div>
+                <div class="font-bold text-base text-[#FCE7CC] mt-0.5">${escapeHtml(c.name)}</div>
+                <div class="text-xs text-[#F8EFE6]/80">${escapeHtml(c.college)} • <span class="font-latin">${c.age} yrs</span></div>
+                ${c.phone ? `<div class="text-xs text-[#DFA76E]/75 font-latin mt-0.5" dir="ltr">${escapeHtml(c.phone)}</div>` : ''}
+              </div>
+              <div>${badgeMap[c.status] || badgeMap.pending}</div>
+            </div>
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[#DFA76E]/15">
+              ${c.screenshot
+                ? `<button onclick="openImgModal('${c.id}')" class="px-3 py-2 rounded-xl bg-[#DFA76E]/15 text-[#FCE7CC] text-xs font-latin">View Receipt</button>`
+                : `<span class="text-xs text-[#DFA76E]/50 font-latin">No Screenshot</span>`
+              }
+              <div class="flex items-center gap-1.5">
+                <button onclick="setStatus('${c.id}', 'verified')" class="px-3 py-2 rounded-xl bg-emerald-500/20 text-emerald-300 text-xs font-latin">✓ Verify</button>
+                <button onclick="setStatus('${c.id}', 'rejected')" class="px-3 py-2 rounded-xl bg-rose-500/20 text-rose-300 text-xs font-latin">✕</button>
+                <button onclick="deleteCandidate('${c.id}')" class="px-3 py-2 rounded-xl bg-white/5 text-[#F8EFE6]/70 text-xs font-latin">Del</button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
     }
 
     async function setStatus(id, status) {
