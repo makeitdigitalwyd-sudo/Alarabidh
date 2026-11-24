@@ -267,12 +267,12 @@
             </div>
             <div>
               <h3 class="text-xl sm:text-2xl font-display font-bold text-white">مواضيع مسابقة العربي</h3>
-              <p class="text-xs text-[#FFD166] font-latin">5 Main Categories • 31 Detailed Sub-Topics &amp; Visitor Recommendations</p>
+              <p class="text-xs text-[#FFD166] font-latin">Click any Main Topic to view its Sub-Topics • 5 Categories</p>
             </div>
           </div>
 
           <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-            <input id="topicSearchInput" type="text" oninput="filterTopics()" placeholder="ابحث في المواضيع والمحاور..."
+            <input id="topicSearchInput" type="text" oninput="filterTopics()" placeholder="ابحث في المواضيع الفرعية..."
               class="input-oasis rounded-xl px-3.5 py-2 text-xs sm:text-sm flex-1 sm:w-56" />
             <button type="button" onclick="openRecModal()" class="btn-sun px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 whitespace-nowrap">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
@@ -281,246 +281,116 @@
           </div>
         </div>
 
-        <!-- Category Filter Pills -->
-        <div class="flex flex-wrap gap-2" id="topicCategoryPills">
-          <button type="button" onclick="selectTopicCat('all')" data-cat="all" class="topic-cat-btn px-3 py-1.5 rounded-full text-xs font-bold bg-[#FFD166] text-[#082F3E] transition">الكل (5 محاور)</button>
-          <button type="button" onclick="selectTopicCat('cat1')" data-cat="cat1" class="topic-cat-btn px-3 py-1.5 rounded-full text-xs font-medium bg-white/15 hover:bg-white/25 border border-white/25 text-white transition">أولاً: نشأة الأدب العربي</button>
-          <button type="button" onclick="selectTopicCat('cat2')" data-cat="cat2" class="topic-cat-btn px-3 py-1.5 rounded-full text-xs font-medium bg-white/15 hover:bg-white/25 border border-white/25 text-white transition">ثانياً: الأدب العربي الهندي</button>
-          <button type="button" onclick="selectTopicCat('cat3')" data-cat="cat3" class="topic-cat-btn px-3 py-1.5 rounded-full text-xs font-medium bg-white/15 hover:bg-white/25 border border-white/25 text-white transition">ثالثاً: علم النحو</button>
-          <button type="button" onclick="selectTopicCat('cat4')" data-cat="cat4" class="topic-cat-btn px-3 py-1.5 rounded-full text-xs font-medium bg-white/15 hover:bg-white/25 border border-white/25 text-white transition">رابعاً: الألغاز اللغوية</button>
-          <button type="button" onclick="selectTopicCat('cat5')" data-cat="cat5" class="topic-cat-btn px-3 py-1.5 rounded-full text-xs font-medium bg-white/15 hover:bg-white/25 border border-white/25 text-white transition">خامساً: المجالات العامة</button>
+        <!-- Interactive 5 Main Topics Selector Grid -->
+        <div>
+          <div class="text-xs text-white/80 mb-3 flex items-center justify-between">
+            <span>اختر المحور الرئيسي لعرض مواضيعه الفرعية:</span>
+            <span class="font-latin text-[11px] text-[#FFD166]">Tap a Main Topic</span>
+          </div>
+          <div id="mainTopicsSelector" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5">
+            <button type="button" onclick="selectTopicCat('cat1')" data-cat="cat1"
+              class="topic-cat-btn text-right rounded-2xl p-3.5 border transition-all bg-[#FFD166] text-[#082F3E] border-[#FFD166] shadow-lg">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-bold opacity-85">أولاً</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-latin font-bold bg-[#082F3E]/15">8</span>
+              </div>
+              <div class="font-display text-base font-bold mt-1 leading-snug">نشأة الأدب العربي</div>
+              <div class="text-[10px] font-latin opacity-80 mt-0.5 truncate">Origins of Arabic Lit.</div>
+            </button>
+
+            <button type="button" onclick="selectTopicCat('cat2')" data-cat="cat2"
+              class="topic-cat-btn text-right rounded-2xl p-3.5 border transition-all bg-[#062A38]/60 hover:bg-white/15 text-white border-white/25">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-bold text-[#FFD166]">ثانياً</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-latin font-bold bg-white/15 text-[#FFD166]">6</span>
+              </div>
+              <div class="font-display text-base font-bold mt-1 leading-snug">الأدب العربي الهندي</div>
+              <div class="text-[10px] font-latin text-white/65 mt-0.5 truncate">Indo-Arabic Literature</div>
+            </button>
+
+            <button type="button" onclick="selectTopicCat('cat3')" data-cat="cat3"
+              class="topic-cat-btn text-right rounded-2xl p-3.5 border transition-all bg-[#062A38]/60 hover:bg-white/15 text-white border-white/25">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-bold text-[#FFD166]">ثالثاً</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-latin font-bold bg-white/15 text-[#FFD166]">6</span>
+              </div>
+              <div class="font-display text-base font-bold mt-1 leading-snug">علم النحو</div>
+              <div class="text-[10px] font-latin text-white/65 mt-0.5 truncate">Arabic Grammar (Nahw)</div>
+            </button>
+
+            <button type="button" onclick="selectTopicCat('cat4')" data-cat="cat4"
+              class="topic-cat-btn text-right rounded-2xl p-3.5 border transition-all bg-[#062A38]/60 hover:bg-white/15 text-white border-white/25">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-bold text-[#FFD166]">رابعاً</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-latin font-bold bg-white/15 text-[#FFD166]">5</span>
+              </div>
+              <div class="font-display text-base font-bold mt-1 leading-snug">الألغاز اللغوية</div>
+              <div class="text-[10px] font-latin text-white/65 mt-0.5 truncate">Linguistic Riddles</div>
+            </button>
+
+            <button type="button" onclick="selectTopicCat('cat5')" data-cat="cat5"
+              class="topic-cat-btn text-right rounded-2xl p-3.5 border transition-all bg-[#062A38]/60 hover:bg-white/15 text-white border-white/25">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-bold text-[#FFD166]">خامساً</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-latin font-bold bg-white/15 text-[#FFD166]">6</span>
+              </div>
+              <div class="font-display text-base font-bold mt-1 leading-snug">المجالات العامة</div>
+              <div class="text-[10px] font-latin text-white/65 mt-0.5 truncate">General Knowledge</div>
+            </button>
+          </div>
         </div>
 
-        <!-- 5 Topic Categories Grid -->
-        <div id="topicsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div class="bg-[#062A38]/60 border border-white/25 hover:border-[#FFD166]/65 rounded-2xl p-5 flex flex-col justify-between transition shadow-lg">
-            <div>
-              <div class="flex items-center justify-between gap-2 border-b border-white/15 pb-3 mb-3.5">
-                <div>
-                  <span class="text-[11px] font-bold text-[#FFD166]">أولاً</span>
-                  <h4 class="font-display text-xl font-bold text-white leading-snug">نشأة الأدب العربي</h4>
-                  <p class="text-[11px] text-white/65 font-latin">Origins & Eras of Arabic Literature</p>
-                </div>
-                <span class="px-2.5 py-1 rounded-full bg-[#FFD166]/20 border border-[#FFD166]/40 text-[#FFD166] font-latin text-xs font-bold shrink-0">8</span>
+        <!-- Active Main Topic's Sub-Topics Display Panel -->
+        <div id="topicsGrid" class="space-y-4">
+          <div class="bg-[#062A38]/65 border border-[#FFD166]/45 rounded-2xl p-5 sm:p-6 shadow-xl">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/15 pb-3.5 mb-4">
+              <div>
+                <span class="text-xs font-bold text-[#FFD166]">أولاً • المحور المختار</span>
+                <h4 class="font-display text-2xl font-bold text-white leading-snug">نشأة الأدب العربي</h4>
+                <p class="text-xs text-white/70 font-latin">Origins &amp; Eras of Arabic Literature</p>
               </div>
-              <ul class="space-y-2 text-sm text-white/95">
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">المعلقات السبع وأصحابها</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">الشعراء الصعاليك</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">شعراء صدر الإسلام والعصر الأموي (حسان، جرير، الفرزدق)</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">المتنبي وأبو العلاء المعري</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">الأدب الأندلسي والموشحات</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">فن المقامات (الهمذاني، الحريري)</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">الجاحظ وابن المقفع</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">رواد النهضة الحديثة (شوقي، حافظ، طه حسين، المهجر)</span>
-                  </li>
-              </ul>
-            </div>
-            <div class="pt-4 mt-4 border-t border-white/10 flex items-center justify-between">
-              <span class="text-[11px] text-white/60 font-latin">8 Sub-topics</span>
-              <button type="button" onclick="openRecModal('أولاً: نشأة الأدب العربي')"
-                class="text-xs text-[#FFD166] hover:underline font-semibold flex items-center gap-1">
-                <span>+ اقترح موضوعاً في هذا المحور</span>
-              </button>
-            </div>
-          </div>
-          <div class="bg-[#062A38]/60 border border-white/25 hover:border-[#FFD166]/65 rounded-2xl p-5 flex flex-col justify-between transition shadow-lg">
-            <div>
-              <div class="flex items-center justify-between gap-2 border-b border-white/15 pb-3 mb-3.5">
-                <div>
-                  <span class="text-[11px] font-bold text-[#FFD166]">ثانياً</span>
-                  <h4 class="font-display text-xl font-bold text-white leading-snug">الأدب العربي الهندي</h4>
-                  <p class="text-[11px] text-white/65 font-latin">Indo-Arabic Literature & Heritage</p>
-                </div>
-                <span class="px-2.5 py-1 rounded-full bg-[#FFD166]/20 border border-[#FFD166]/40 text-[#FFD166] font-latin text-xs font-bold shrink-0">6</span>
+              <div class="flex items-center gap-2">
+                <span class="px-3 py-1 rounded-full bg-[#FFD166]/20 border border-[#FFD166]/40 text-[#FFD166] font-latin text-xs font-bold">8 Sub-topics</span>
+                <button type="button" onclick="openRecModal('أولاً: نشأة الأدب العربي')"
+                  class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/25 text-xs text-[#FFD166] font-semibold transition">
+                  + اقترح هنا
+                </button>
               </div>
-              <ul class="space-y-2 text-sm text-white/95">
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">زين الدين المخدوم و«تحفة المجاهدين»</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">الشاه ولي الله الدهلوي</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">أبو الحسن علي الندوي وندوة العلماء</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">دار العلوم ديوبند</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">الصحافة العربية في الهند</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">الأدب العربي في كيرالا</span>
-                  </li>
-              </ul>
             </div>
-            <div class="pt-4 mt-4 border-t border-white/10 flex items-center justify-between">
-              <span class="text-[11px] text-white/60 font-latin">6 Sub-topics</span>
-              <button type="button" onclick="openRecModal('ثانياً: الأدب العربي الهندي')"
-                class="text-xs text-[#FFD166] hover:underline font-semibold flex items-center gap-1">
-                <span>+ اقترح موضوعاً في هذا المحور</span>
-              </button>
-            </div>
-          </div>
-          <div class="bg-[#062A38]/60 border border-white/25 hover:border-[#FFD166]/65 rounded-2xl p-5 flex flex-col justify-between transition shadow-lg">
-            <div>
-              <div class="flex items-center justify-between gap-2 border-b border-white/15 pb-3 mb-3.5">
-                <div>
-                  <span class="text-[11px] font-bold text-[#FFD166]">ثالثاً</span>
-                  <h4 class="font-display text-xl font-bold text-white leading-snug">علم النحو</h4>
-                  <p class="text-[11px] text-white/65 font-latin">Arabic Grammar & Syntax (Al-Nahw)</p>
-                </div>
-                <span class="px-2.5 py-1 rounded-full bg-[#FFD166]/20 border border-[#FFD166]/40 text-[#FFD166] font-latin text-xs font-bold shrink-0">6</span>
-              </div>
-              <ul class="space-y-2 text-sm text-white/95">
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">المرفوعات والمنصوبات والمجرورات</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">كان وأخواتها وإنّ وأخواتها</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">الممنوع من الصرف</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">التوابع (النعت، العطف، التوكيد، البدل)</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">الإعراب</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">سيبويه وألفية ابن مالك</span>
-                  </li>
-              </ul>
-            </div>
-            <div class="pt-4 mt-4 border-t border-white/10 flex items-center justify-between">
-              <span class="text-[11px] text-white/60 font-latin">6 Sub-topics</span>
-              <button type="button" onclick="openRecModal('ثالثاً: علم النحو')"
-                class="text-xs text-[#FFD166] hover:underline font-semibold flex items-center gap-1">
-                <span>+ اقترح موضوعاً في هذا المحور</span>
-              </button>
-            </div>
-          </div>
-          <div class="bg-[#062A38]/60 border border-white/25 hover:border-[#FFD166]/65 rounded-2xl p-5 flex flex-col justify-between transition shadow-lg">
-            <div>
-              <div class="flex items-center justify-between gap-2 border-b border-white/15 pb-3 mb-3.5">
-                <div>
-                  <span class="text-[11px] font-bold text-[#FFD166]">رابعاً</span>
-                  <h4 class="font-display text-xl font-bold text-white leading-snug">الألغاز اللغوية</h4>
-                  <p class="text-[11px] text-white/65 font-latin">Linguistic Riddles, Proverbs & Idioms</p>
-                </div>
-                <span class="px-2.5 py-1 rounded-full bg-[#FFD166]/20 border border-[#FFD166]/40 text-[#FFD166] font-latin text-xs font-bold shrink-0">5</span>
-              </div>
-              <ul class="space-y-2 text-sm text-white/95">
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">المترادفات والأضداد</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">الأمثال العربية</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">الألغاز والأحاجي</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">المشترك اللفظي</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">التعابير الاصطلاحية</span>
-                  </li>
-              </ul>
-            </div>
-            <div class="pt-4 mt-4 border-t border-white/10 flex items-center justify-between">
-              <span class="text-[11px] text-white/60 font-latin">5 Sub-topics</span>
-              <button type="button" onclick="openRecModal('رابعاً: الألغاز اللغوية')"
-                class="text-xs text-[#FFD166] hover:underline font-semibold flex items-center gap-1">
-                <span>+ اقترح موضوعاً في هذا المحور</span>
-              </button>
-            </div>
-          </div>
-          <div class="bg-[#062A38]/60 border border-white/25 hover:border-[#FFD166]/65 rounded-2xl p-5 flex flex-col justify-between transition shadow-lg">
-            <div>
-              <div class="flex items-center justify-between gap-2 border-b border-white/15 pb-3 mb-3.5">
-                <div>
-                  <span class="text-[11px] font-bold text-[#FFD166]">خامساً</span>
-                  <h4 class="font-display text-xl font-bold text-white leading-snug">المجالات العامة</h4>
-                  <p class="text-[11px] text-white/65 font-latin">Islamic Civilization & General Arabic Knowledge</p>
-                </div>
-                <span class="px-2.5 py-1 rounded-full bg-[#FFD166]/20 border border-[#FFD166]/40 text-[#FFD166] font-latin text-xs font-bold shrink-0">6</span>
-              </div>
-              <ul class="space-y-2 text-sm text-white/95">
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">علماء الحضارة الإسلامية</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">الخط العربي وأنواعه</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">عواصم الدول العربية</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">جامعة الدول العربية</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">أشهر الكتب العربية ومؤلفوها</span>
-                  </li>
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">المعاجم العربية</span>
-                  </li>
-              </ul>
-            </div>
-            <div class="pt-4 mt-4 border-t border-white/10 flex items-center justify-between">
-              <span class="text-[11px] text-white/60 font-latin">6 Sub-topics</span>
-              <button type="button" onclick="openRecModal('خامساً: المجالات العامة')"
-                class="text-xs text-[#FFD166] hover:underline font-semibold flex items-center gap-1">
-                <span>+ اقترح موضوعاً في هذا المحور</span>
-              </button>
-            </div>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-sm text-white/95">
+              <li class="flex items-start gap-2.5 bg-white/5 hover:bg-white/10 rounded-xl px-3.5 py-2.5 border border-white/10 transition">
+                <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
+                <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">المعلقات السبع وأصحابها</span>
+              </li>
+              <li class="flex items-start gap-2.5 bg-white/5 hover:bg-white/10 rounded-xl px-3.5 py-2.5 border border-white/10 transition">
+                <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
+                <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">الشعراء الصعاليك</span>
+              </li>
+              <li class="flex items-start gap-2.5 bg-white/5 hover:bg-white/10 rounded-xl px-3.5 py-2.5 border border-white/10 transition">
+                <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
+                <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">شعراء صدر الإسلام والعصر الأموي (حسان، جرير، الفرزدق)</span>
+              </li>
+              <li class="flex items-start gap-2.5 bg-white/5 hover:bg-white/10 rounded-xl px-3.5 py-2.5 border border-white/10 transition">
+                <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
+                <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">المتنبي وأبو العلاء المعري</span>
+              </li>
+              <li class="flex items-start gap-2.5 bg-white/5 hover:bg-white/10 rounded-xl px-3.5 py-2.5 border border-white/10 transition">
+                <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
+                <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">الأدب الأندلسي والموشحات</span>
+              </li>
+              <li class="flex items-start gap-2.5 bg-white/5 hover:bg-white/10 rounded-xl px-3.5 py-2.5 border border-white/10 transition">
+                <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
+                <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">فن المقامات (الهمذاني، الحريري)</span>
+              </li>
+              <li class="flex items-start gap-2.5 bg-white/5 hover:bg-white/10 rounded-xl px-3.5 py-2.5 border border-white/10 transition">
+                <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
+                <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">الجاحظ وابن المقفع</span>
+              </li>
+              <li class="flex items-start gap-2.5 bg-white/5 hover:bg-white/10 rounded-xl px-3.5 py-2.5 border border-white/10 transition">
+                <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
+                <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">رواد النهضة الحديثة (شوقي، حافظ، طه حسين، المهجر)</span>
+              </li>
+            </ul>
           </div>
         </div>
 
@@ -1604,7 +1474,7 @@
 
     const REC_STORAGE_KEY = 'al_arabi_2026_recommendations_v1';
     let recommendations = [];
-    let activeTopicCat = 'all';
+    let activeTopicCat = 'cat1';
 
     const COMPETITION_TOPICS = [
       {
@@ -1682,11 +1552,26 @@
 
     function selectTopicCat(catId) {
       activeTopicCat = catId;
+      const searchEl = document.getElementById('topicSearchInput');
+      if (searchEl && searchEl.value.trim()) {
+        searchEl.value = '';
+      }
       document.querySelectorAll('.topic-cat-btn').forEach(btn => {
         const isSelected = btn.getAttribute('data-cat') === catId;
-        btn.className = isSelected
-          ? 'topic-cat-btn px-3 py-1.5 rounded-full text-xs font-bold bg-[#FFD166] text-[#082F3E] transition'
-          : 'topic-cat-btn px-3 py-1.5 rounded-full text-xs font-medium bg-white/15 hover:bg-white/25 border border-white/25 text-white transition';
+        const numSpan = btn.querySelector('span:first-child');
+        const countSpan = btn.querySelector('span:last-child');
+        const subDiv = btn.querySelector('div:last-child');
+        if (isSelected) {
+          btn.className = 'topic-cat-btn text-right rounded-2xl p-3.5 border transition-all bg-[#FFD166] text-[#082F3E] border-[#FFD166] shadow-lg';
+          if (numSpan) numSpan.className = 'text-[11px] font-bold opacity-85';
+          if (countSpan) countSpan.className = 'px-2 py-0.5 rounded-full text-[10px] font-latin font-bold bg-[#082F3E]/15';
+          if (subDiv) subDiv.className = 'text-[10px] font-latin opacity-80 mt-0.5 truncate';
+        } else {
+          btn.className = 'topic-cat-btn text-right rounded-2xl p-3.5 border transition-all bg-[#062A38]/60 hover:bg-white/15 text-white border-white/25';
+          if (numSpan) numSpan.className = 'text-[11px] font-bold text-[#FFD166]';
+          if (countSpan) countSpan.className = 'px-2 py-0.5 rounded-full text-[10px] font-latin font-bold bg-white/15 text-[#FFD166]';
+          if (subDiv) subDiv.className = 'text-[10px] font-latin text-white/65 mt-0.5 truncate';
+        }
       });
       renderTopics();
     }
@@ -1701,15 +1586,16 @@
       const q = (document.getElementById('topicSearchInput')?.value || '').trim().toLowerCase();
 
       const filteredCats = COMPETITION_TOPICS.filter(cat => {
-        if (activeTopicCat !== 'all' && cat.id !== activeTopicCat) return false;
-        if (!q) return true;
+        if (!q) {
+          return cat.id === activeTopicCat;
+        }
         return cat.title.toLowerCase().includes(q) ||
                cat.num.toLowerCase().includes(q) ||
                cat.items.some(item => item.toLowerCase().includes(q));
       });
 
       if (filteredCats.length === 0) {
-        grid.innerHTML = `<div class="col-span-full text-center py-8 text-sm text-white/75">لا توجد مواضيع مطابقة لعبارة البحث.</div>`;
+        grid.innerHTML = `<div class="text-center py-8 text-sm text-white/75 bg-[#062A38]/50 rounded-2xl border border-white/20">لا توجد مواضيع مطابقة لعبارة البحث.</div>`;
         return;
       }
 
@@ -1718,31 +1604,29 @@
           ? cat.items.filter(item => item.toLowerCase().includes(q) || cat.title.toLowerCase().includes(q))
           : cat.items;
         return `
-          <div class="bg-[#062A38]/50 border border-white/25 hover:border-[#FFD166]/60 rounded-2xl p-5 flex flex-col justify-between transition shadow-lg">
-            <div>
-              <div class="flex items-center justify-between gap-2 border-b border-white/15 pb-3 mb-3.5">
-                <div>
-                  <span class="text-[11px] font-bold text-[#FFD166]">${escapeHtml(cat.num)}</span>
-                  <h4 class="font-display text-xl font-bold text-white leading-snug">${escapeHtml(cat.title)}</h4>
-                  <p class="text-[11px] text-white/65 font-latin">${escapeHtml(cat.enTitle)}</p>
-                </div>
-                <span class="px-2.5 py-1 rounded-full bg-white/15 text-[#FFD166] font-latin text-xs font-bold shrink-0">${matchingItems.length}</span>
+          <div class="bg-[#062A38]/65 border border-[#FFD166]/45 rounded-2xl p-5 sm:p-6 shadow-xl">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/15 pb-3.5 mb-4">
+              <div>
+                <span class="text-xs font-bold text-[#FFD166]">${escapeHtml(cat.num)} • المحور المختار</span>
+                <h4 class="font-display text-2xl font-bold text-white leading-snug">${escapeHtml(cat.title)}</h4>
+                <p class="text-xs text-white/70 font-latin">${escapeHtml(cat.enTitle)}</p>
               </div>
-              <ul class="space-y-2 text-sm text-white/95">
-                ${matchingItems.map(item => `
-                  <li class="flex items-start gap-2 bg-white/5 hover:bg-white/10 rounded-xl px-3 py-2 border border-white/10 transition">
-                    <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
-                    <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">${escapeHtml(item)}</span>
-                  </li>
-                `).join('')}
-              </ul>
+              <div class="flex items-center gap-2">
+                <span class="px-3 py-1 rounded-full bg-[#FFD166]/20 border border-[#FFD166]/40 text-[#FFD166] font-latin text-xs font-bold">${matchingItems.length} Sub-topics</span>
+                <button type="button" onclick="openRecModal('${escapeHtml(cat.num + ': ' + cat.title)}')"
+                  class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/25 text-xs text-[#FFD166] font-semibold transition">
+                  + اقترح هنا
+                </button>
+              </div>
             </div>
-            <div class="pt-4 mt-4 border-t border-white/10 flex justify-end">
-              <button type="button" onclick="openRecModal('${escapeHtml(cat.num + ': ' + cat.title)}')"
-                class="text-xs text-[#FFD166] hover:underline flex items-center gap-1">
-                <span>+ اقترح موضوعاً في هذا المحور</span>
-              </button>
-            </div>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-sm text-white/95">
+              ${matchingItems.map(item => `
+                <li class="flex items-start gap-2.5 bg-white/5 hover:bg-white/10 rounded-xl px-3.5 py-2.5 border border-white/10 transition">
+                  <span class="text-[#FFD166] mt-0.5 text-xs shrink-0">◆</span>
+                  <span class="leading-relaxed text-xs sm:text-sm font-medium text-white">${escapeHtml(item)}</span>
+                </li>
+              `).join('')}
+            </ul>
           </div>
         `;
       }).join('');
@@ -1860,8 +1744,7 @@
     function exportRecsCsv() {
       const header = ['ID', 'Name', 'Role', 'Category', 'Title', 'Details', 'Approved', 'CreatedAt'];
       const rows = recommendations.map(r => [r.id, r.name || '', r.role || '', r.category, r.title, r.details || '', r.approved ? 'Yes' : 'No', r.createdAt]);
-      const csv = '﻿' + [header, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('
-');
+      const csv = '\uFEFF' + [header, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
